@@ -1,6 +1,7 @@
 import { BlockChain } from './blockchain';
 import { P2PNetwork } from './p2p';
 import * as express from 'express';
+import * as cors from 'cors';
 
 class HttpNetwork {
   blockchain: BlockChain;
@@ -15,6 +16,7 @@ class HttpNetwork {
     const app = express();
     app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
+    app.use(cors());
   
     app.get("/blocks", (req, res) => {
       res.send(this.blockchain);
