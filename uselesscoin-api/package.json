@@ -2,10 +2,10 @@
   "name": "uselesscoin",
   "version": "1.0.0",
   "description": "An example of creating a new cryptocurrency",
-  "main": "src/server.js",
+  "main": "src/main.js",
   "scripts": {
     "compile": "tsc",
-    "start": "tsc && node src/server.js"
+    "start": "tsc && node src/main.js"
   },
   "keywords": [],
   "author": "",

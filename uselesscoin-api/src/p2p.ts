@@ -38,9 +38,14 @@ class P2PNetwork {
    * Initialize connection in the network
    */
   initConnection(ws: WebSocket) {
+    this.initMessageHandler(ws);
+    this.initErrorHandler(ws);
     this.sockets.push(ws);
   }
 
+  /**
+   * Initialize the message handler for the socket
+   */
   initMessageHandler(ws: WebSocket) {
     ws.on('message', (data: string) => {
       const message: Message = this.JSONToObject<Message>(data);
@@ -155,6 +160,14 @@ class P2PNetwork {
       this.initConnection(ws);
     });
   }
+
+  initErrorHandler(ws: WebSocket) {
+    const closeConnection = (myWs: WebSocket) => {
+        this.sockets.splice(this.sockets.indexOf(myWs), 1);
+    };
+    ws.on('close', () => closeConnection(ws));
+    ws.on('error', () => closeConnection(ws));
+  };
 
   /**
    * Try to parse from the data string into Message type,
