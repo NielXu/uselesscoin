@@ -21,8 +21,8 @@ class Block {
 class BlockChain {
   blockchain: Block[];
 
-  constructor() {
-    this.blockchain = [this.getGenesisBlock()];
+  constructor(blockchain?: Block[]) {
+    this.blockchain = blockchain || [this.getGenesisBlock()];
   }
 
   /**
@@ -51,7 +51,7 @@ class BlockChain {
    */
   getGenesisBlock(): Block {
     const timestamp = 1621805758983;
-    const message = "Smart Idea";
+    const message = "UselessCoin";
     return new Block(
       0,
       "0",
@@ -75,7 +75,7 @@ class BlockChain {
   /**
    * Append a block into the blockchain
    */
-  addBlock(block: Block): { success: boolean, error?: string } {
+  addBlockToChain(block: Block): { success: boolean, error?: string } {
     const { success, error } = this.isValidBlock(block, this.getLatestBlock());
     if (success) {
       this.blockchain.push(block);
@@ -134,6 +134,18 @@ class BlockChain {
       }
     }
     return true;
+  }
+
+  /**
+   * Validating if the block structure is correct by checking
+   * all of the types
+   */
+  isValidBlockStructure(block: Block): boolean {
+    return typeof block.index === 'number'
+        && typeof block.hash === 'string'
+        && typeof block.prevHash === 'string'
+        && typeof block.timestamp === 'number'
+        && typeof block.data === 'string';
   }
 }
 
