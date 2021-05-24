@@ -1,11 +1,15 @@
 import { BlockChain } from './blockchain';
+import { P2PNetwork } from './p2p';
 import * as express from 'express';
 
 const HTTP_PORT: number = parseInt(process.env.HTTP_PORT) || 3001;
+const P2P_PORT: number = parseInt(process.env.P2P_PORT) || 6001;
+
+const blockchain = new BlockChain();
+const p2pnetwork = new P2PNetwork(blockchain);
 
 const initHttpServer = (port: number) => {
   const app = express();
-  const blockchain = new BlockChain();
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
 
@@ -17,7 +21,7 @@ const initHttpServer = (port: number) => {
     const newBlock = blockchain.getBlock(req.body.data);
     console.log(`Block #${newBlock.index} created`);
     console.log(`Hash: ${newBlock.hash}\n`);
-    blockchain.addBlock(newBlock);
+    blockchain.addBlockToChain(newBlock);
     res.send(newBlock);
   });
 
@@ -27,3 +31,4 @@ const initHttpServer = (port: number) => {
 }
 
 initHttpServer(HTTP_PORT);
+p2pnetwork.initP2PServer(P2P_PORT);

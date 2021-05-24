@@ -31,6 +31,7 @@ class P2PNetwork {
     this.p2pServer.on("connection", (ws: WebSocket) => {
       this.initConnection(ws);
     });
+    console.log(`Listening websocket p2p port on: ${port}`);
   }
 
   /**
