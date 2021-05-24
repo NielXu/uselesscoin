@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 
 // environment
 import { environment } from '../../environments/environment';
+import { Block } from '../classes/block';
 
 
 @Injectable({
@@ -15,8 +16,8 @@ import { environment } from '../../environments/environment';
 export class BlockChainService {
   constructor(private http: HttpClient) {}
 
-  getAllBlocks() {
-    return this.http.get(`${environment.backendUrl}/blocks`);
+  getAllBlocks(): Observable<{ blockchain: Block[] }> {
+    return this.http.get<{ blockchain: Block[] }>(`${environment.backendUrl}/blocks`);
   }
 
 }

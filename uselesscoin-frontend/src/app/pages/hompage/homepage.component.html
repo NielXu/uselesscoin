@@ -1,1 +1,20 @@
-yea boi
+<div class="homepage-container">
+  <div class="homepage-table-container" *ngIf="!loading">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Height</th>
+          <th>Hash</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let block of blocks">
+          <td>{{ block.index }}</td>
+          <td>{{ block.hash }}</td>
+          <td>{{ block.timestamp | date:'y-MM-dd hh:mm:ss a' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
