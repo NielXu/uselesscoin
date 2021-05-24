@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "uselesscoin-frontend"
+    }
+  },
+  "defaultProject": "uselesscoin-frontend",
+  "cli": {
+    "analytics": "e2385baa-8771-43ce-bf0e-d1a638a17691"
+  }
 }
