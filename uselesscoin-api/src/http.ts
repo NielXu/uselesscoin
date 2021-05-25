@@ -23,10 +23,10 @@ class HttpNetwork {
     });
   
     app.post("/mine", (req, res) => {
-      const newBlock = this.blockchain.getBlock(req.body.data);
+      const newBlock = this.blockchain.mineBlock(req.body.data);
       this.blockchain.addBlockToChain(newBlock);
       this.p2pNetwork.broadcastLatest();
-      console.log(`Block #${newBlock.index} created`);
+      console.log(`Block #${newBlock.index} mined`);
       console.log(`Hash: ${newBlock.hash}\n`);
       res.send(newBlock);
     });

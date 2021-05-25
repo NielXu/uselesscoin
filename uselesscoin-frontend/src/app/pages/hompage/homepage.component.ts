@@ -83,6 +83,7 @@ export class HomepageComponent implements OnInit{
     }
     this.websocket = this.peerService.createWs(this.p2pUrl);
     this.queryBlockChain();
+    this.getPeers();
     this.websocket.subscribe(
       msg => this.handleRecvMsg(msg),
       err => this.handleError(err),
