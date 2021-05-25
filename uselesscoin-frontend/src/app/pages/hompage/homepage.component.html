@@ -1,5 +1,49 @@
 <div class="homepage-container">
-  <div class="homepage-table-container" *ngIf="!loading">
+  <div class="homepage-url-input">
+    <div class="mb-3">
+      <label for="nodeUrlInput" class="form-label">Node URL</label>
+      <input
+        type="text"
+        class="form-control"
+        id="nodeUrlInput"
+        placeholder="http://localhost:3001"
+        [(ngModel)]="nodeUrl"
+      >
+    </div>
+    <div class="mb-3">
+      <label for="p2pUrlInput" class="form-label">P2P WebSocket URL</label>
+      <input
+        type="text"
+        class="form-control"
+        id="p2pUrlInput"
+        placeholder="ws://localhost:6001"
+        [(ngModel)]="p2pUrl"
+      >
+    </div>
+    <div class="mb-3 d-flex justify-content-center">
+      <button class="btn btn-primary" (click)="connect()">Connect</button>
+    </div>
+
+    <div class="mb-3">
+      <label for="addPeerInput" class="form-label">Peer</label>
+      <input
+        type="text"
+        class="form-control"
+        id="addPeerInput"
+        placeholder="ws://localhost:6001"
+        [(ngModel)]="newPeer"
+      >
+    </div>
+    <div class="mb-3 d-flex justify-content-center">
+      <button class="btn btn-success" (click)="addPeer()">Add Peer</button>
+    </div>
+
+    <div class="alert alert-danger" role="alert" *ngIf="error">
+      {{ error }}
+    </div>
+  </div>
+
+  <div class="homepage-table-container" *ngIf="!loading && blocks?.length > 0">
     <table class="table">
       <thead>
         <tr>

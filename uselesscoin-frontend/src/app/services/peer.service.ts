@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { Observable } from 'rxjs';
 
-import { environment } from '../../environments/environment';
+import { Message } from '../classes/message';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,11 +11,19 @@ import { environment } from '../../environments/environment';
 export class PeerService {
   constructor(private http: HttpClient) {}
 
-  getPeers(): Observable<string[]> {
-    return this.http.get<string[]>(`${environment.backendUrl}/peers`);
+  createWs(url: string): WebSocketSubject<any> {
+    return webSocket(url);
   }
 
-  createWs(): WebSocketSubject<any> {
-    return webSocket(environment.socketUrl);
+  addPeer(backendUrl: string, wsUrl: string): Observable<{ success: boolean}> {
+    return this.http.post<{ success: boolean }>(`${backendUrl}/addPeer`, { peer: wsUrl });
+  }
+
+  getPeers(backendUrl: string): Observable<string[]> {
+    return this.http.get<string[]>(`${backendUrl}/peers`);
+  }
+
+  sendMsg(ws: WebSocketSubject<any>, msg: Message) {
+    ws.next(msg);
   }
 }

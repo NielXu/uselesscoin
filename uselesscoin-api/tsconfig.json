@@ -6,7 +6,8 @@
   },
   "include": [
     "src/main.ts",
-    "src/blockchain.ts"
+    "src/blockchain.ts",
+    "src/cluster.ts"
   ],
   "exclude": [
     "node_modules"

@@ -24,9 +24,10 @@ class HttpNetwork {
   
     app.post("/mine", (req, res) => {
       const newBlock = this.blockchain.getBlock(req.body.data);
+      this.blockchain.addBlockToChain(newBlock);
+      this.p2pNetwork.broadcastLatest();
       console.log(`Block #${newBlock.index} created`);
       console.log(`Hash: ${newBlock.hash}\n`);
-      this.blockchain.addBlockToChain(newBlock);
       res.send(newBlock);
     });
   
@@ -35,8 +36,8 @@ class HttpNetwork {
     });
   
     app.post('/addPeer', (req, res) => {
-      this.p2pNetwork.connectToPeers(req.body.peer);
-      res.send();
+      this.p2pNetwork.addPeer(req.body.peer);
+      res.send({ success: true });
     });
   
     app.listen(port, () => {

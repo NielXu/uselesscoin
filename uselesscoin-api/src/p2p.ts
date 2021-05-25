@@ -152,9 +152,9 @@ class P2PNetwork {
   }
 
   /**
-   * Make connection with the peers
+   * Connect with the new peer, add it into the websocket list
    */
-  connectToPeers(newPeer: string): void {
+  addPeer(newPeer: string): void {
     const ws: WebSocket = new WebSocket(newPeer);
     ws.on('open', () => {
       this.initConnection(ws);
